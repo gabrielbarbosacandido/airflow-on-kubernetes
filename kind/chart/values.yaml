@@ -1,0 +1,50 @@
+uid: 50000
+gid: 0
+
+airflowHome: /opt/airflow
+
+executor: KubernetesExecutor
+
+images:
+  airflow:
+    repository: apache-airflow
+    tag: '2.9.2'
+
+postgresql:
+  enabled: true
+
+scheduler:
+  enabled: true
+  replicas: 1
+  waitForMigration:
+    enabled: true
+
+webserver:
+  enabled: true
+  replicas: 1
+  defaultUser:
+    enabled: true
+    role: Admin
+    username: Admin
+    firstName: admin
+    lastName: user
+    password: admin
+    service:
+      type: NodePort
+
+dags:
+  persistance:
+    enabled: true
+    size: 1Gi
+    storageClassName: local-storage
+    accessMode: ReadWriteOnce
+    existingClaim: pv-airflow
+  gitsync:
+    enabled: true
+
+logs:
+  persistance:
+    enabled: true
+    size: 100Gi
+    storageClassName: local-storage
+    existingClaim: pv-logs

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pv-airflow
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  rosources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pv-logs
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  rosources:
+    requests:
+      storage: 2Gi
