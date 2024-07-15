@@ -7,41 +7,46 @@ executor: KubernetesExecutor
 
 images:
   airflow:
-    repository: apache-airflow
-    tag: '2.9.2'
+    repository: apache/airflow
+    tag: 2.9.2
 
 postgresql:
   enabled: true
 
 scheduler:
   enabled: true
-  waitForMigration:
+  waitForMigrations:
     enabled: true
+
 
 webserver:
   enabled: true
   defaultUser:
     enabled: true
     role: Admin
-    username: Admin
+    username: admin
+    email: admin@example.com
     firstName: admin
     lastName: user
     password: admin
-    service:
-      type: NodePort
+  service:
+    type: NodePort
+
+triggerer:
+  enabled: false
 
 dags:
-  persistance:
+  persistence:
     enabled: true
     size: 1Gi
     storageClassName: local-storage
     accessMode: ReadWriteOnce
     existingClaim: pv-airflow
-  gitsync:
+  gitSync:
     enabled: false
 
 logs:
-  persistance:
+  persistence:
     enabled: true
     size: 100Gi
     storageClassName: local-storage
