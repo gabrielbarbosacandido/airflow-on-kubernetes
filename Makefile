@@ -1,9 +1,14 @@
+#!/bin/bash
+
 .PHONY: create_cluster_kind webserver_port_forward start_cluster_kind upgrade_helm_chart delete_cluster_kind image start upgrade delete
 
 CLUSTER_NAME=airflow-cluster
 NAMESPACE=airflow
 
 create_cluster_kind:
+    mkdir -p logs
+	chmod -R 777 logs
+	
 	@echo "Creating Kind cluster with name: $(CLUSTER_NAME)"
 	kind create cluster --name "$(CLUSTER_NAME)" --config kind/kind-cluster.yaml || { \
 	echo "Failed to create Kind cluster." >&2; \
@@ -35,14 +40,12 @@ start_cluster_kind: create_cluster_kind
 	echo "Failed to apply pv.yaml." >&2; \
 	exit 1; \
 	}
-	@echo "pv.yaml applied successfully."
 
 	@echo "Applying pvc.yaml..."
 	kubectl apply -f kind/pvc.yaml -n "$(NAMESPACE)" || { \
 	echo "Failed to apply pvc.yaml." >&2; \
 	exit 1; \
 	}
-	@echo "pvc.yaml applied successfully."
 
 	@echo "Installing Airflow..."
 	helm install airflow apache-airflow/airflow --namespace "$(NAMESPACE)" -f kind/chart/values.yaml --debug --timeout 5m0s || { \

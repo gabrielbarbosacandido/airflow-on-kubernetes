@@ -11,7 +11,8 @@ spec:
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: /opt/airflow/dags
+    path: "/opt/airflow/dags"
+
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -26,4 +27,4 @@ spec:
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: /opt/airflow/logs
+    path: "/opt/airflow/logs"

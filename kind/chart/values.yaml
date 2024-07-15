@@ -2,13 +2,12 @@ uid: 50000
 gid: 0
 
 airflowHome: /opt/airflow
-
-executor: KubernetesExecutor
+executor: "KubernetesExecutor"
 
 images:
   airflow:
-    repository: apache/airflow
-    tag: 2.9.2
+    repository: "apache/airflow"
+    tag: "2.9.2"
 
 postgresql:
   enabled: true
@@ -17,7 +16,6 @@ scheduler:
   enabled: true
   waitForMigrations:
     enabled: true
-
 
 webserver:
   enabled: true
@@ -31,9 +29,8 @@ webserver:
     password: admin
   service:
     type: NodePort
-
-triggerer:
-  enabled: false
+  waitForMigrations:
+    enabled: true
 
 dags:
   persistence:
