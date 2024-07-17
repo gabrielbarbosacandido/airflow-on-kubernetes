@@ -6,7 +6,7 @@ CLUSTER_NAME=airflow-cluster
 NAMESPACE=airflow
 
 create_cluster_kind:
-  	mkdir -p logs
+	mkdir -p logs
 	chmod -R 777 logs
 	
 	@echo "Creating Kind cluster with name: $(CLUSTER_NAME)"
