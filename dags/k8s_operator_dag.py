@@ -12,7 +12,7 @@ default_args = {
 }
 
 with DAG(
-    dag_id="hello_world_kubernetes_pod",
+    dag_id="hello_world_k8s_pod_operator_dag",
     default_args=default_args,
     schedule_interval=None,
     catchup=False,

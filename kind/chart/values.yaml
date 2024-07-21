@@ -4,20 +4,43 @@ gid: 0
 airflowHome: /opt/airflow
 executor: "KubernetesExecutor"
 
-images:
-  airflow:
-    repository: "apache/airflow"
-    tag: "2.9.2"
+defaultAirflowRepository: apache/airflow
+defaultAirflowTag: "2.9.2"
+airflowVersion: "2.9.2"
 
 postgresql:
   enabled: true
 
 scheduler:
+  securityContext:
+    runAsUser: 50000
+    fsGroup: 0
+    runAsGroup: 0
+  resources:
+    limits:
+     cpu: 1000m
+     memory: 1Gi
+    requests:
+     cpu: 400m
+     memory: 400Mi
   enabled: true
   waitForMigrations:
     enabled: true
 
+workers:
+  securityContext:
+    runAsUser: 50000
+    fsGroup: 0
+    runAsGroup: 0
+    
 webserver:
+  resources:
+    limits:
+     cpu: 800m
+     memory: 1Gi
+    requests:
+     cpu: 400m
+     memory: 500Mi
   enabled: true
   defaultUser:
     enabled: true
@@ -29,6 +52,11 @@ webserver:
     password: admin
   service:
     type: NodePort
+  waitForMigrations:
+    enabled: true
+
+triggerer:
+  enabled: true
   waitForMigrations:
     enabled: true
 
